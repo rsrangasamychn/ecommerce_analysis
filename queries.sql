@@ -1,3 +1,4 @@
+-- Some real-world questions
 -- 1. What is the total amount spent by each customer? Provide a list of customers ordered by the total amount spent in descending order.
 SELECT
   o.customer_id, 
