@@ -3,20 +3,28 @@
 SELECT
   o.customer_id, 
   SUM(p.amount) AS total_amount_spent
-FROM payments p
-JOIN orders o ON p.order_id = o.order_id
-GROUP BY o.customer_id
-ORDER BY total_amount_spent DESC;
+FROM
+  payments p
+JOIN
+  orders o ON p.order_id = o.order_id
+GROUP BY
+  o.customer_id
+ORDER BY
+  total_amount_spent DESC;
 
 
 -- 2. What are the top 5 best-selling products based on total quantity sold?
 SELECT
   p.name,
   SUM(o.quantity) AS total_quantity_sold
-FROM products p
-JOIN order_items o ON o.product_id = p.product_id
-GROUP BY p.name
-ORDER BY total_quantity_sold DESC
+FROM
+  products p
+JOIN
+  order_items o ON o.product_id = p.product_id
+GROUP BY
+  p.name
+ORDER BY
+  total_quantity_sold DESC
 LIMIT 5;
 
 
@@ -24,10 +32,14 @@ LIMIT 5;
 SELECT 
   DATE_FORMAT(payment_date, '%Y-%m') AS month,
   SUM(amount) AS total_sales
-FROM payments
-WHERE payment_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-GROUP BY month
-ORDER BY month;
+FROM
+  payments
+WHERE
+  payment_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY
+  month
+ORDER BY
+  month;
 
 
 -- 4. What percentage of orders are completed, pending, or failed?
@@ -102,9 +114,12 @@ FROM (
         END AS keyword
     FROM reviews
 ) AS negative_keywords
-WHERE keyword IS NOT NULL
-GROUP BY keyword
-ORDER BY occurrence_count DESC;
+WHERE
+  keyword IS NOT NULL
+GROUP BY
+  keyword
+ORDER BY
+  occurrence_count DESC;
 
 
 -- 9. What is the distribution of payment methods used by customers (Credit Card, PayPal, Cash on Delivery)? Identify trends over time.
@@ -112,9 +127,12 @@ SELECT
   payment_method,
   COUNT(*) AS total_payments,
   ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM payments), 2) AS percentage
-FROM payments
-GROUP BY payment_method
-ORDER BY total_payments DESC;
+FROM
+  payments
+GROUP BY
+  payment_method
+ORDER BY
+  total_payments DESC;
 
 
 -- 10. What is the total revenue generated in the last 12 months?
